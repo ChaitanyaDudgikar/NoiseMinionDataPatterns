@@ -1,0 +1,88 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javaapplication2;
+
+import java.io.IOException;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+/**
+ *
+ * @author cdudg
+ */
+public class JavaApplication2
+{
+
+    class NoiseMapper extends Mapper<Object, Text, Text, Text>
+    {
+
+        Text outputKey = new Text();
+        Text outputValue = new Text();
+
+        @Override
+        protected void map(Object key, Text value, Context context) throws IOException, InterruptedException
+        {
+            //super.map(key, value, context); //To change body of generated methods, choose Tools | Templates.
+            String line = value.toString();
+            String[] tokens = line.split(",");
+
+            outputKey.set(value);
+            outputValue.set("1");
+
+            context.write(outputKey, outputValue);
+        }
+    }
+
+    class NoiseReducer extends Reducer<Text, Text, Text, Text>
+    {
+
+        Text outputKey = new Text();
+        Text outputValue = new Text();
+
+        @Override
+        protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException
+        {
+            outputKey.set(key);
+            for (Text value : values)
+            {
+                outputValue.set(value);
+                
+                context.write(outputKey,outputValue);
+            }
+        }
+
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException
+    {
+        System.setProperty("hadoop.home.dir", "d:/hadoop-3.2.1");
+        
+        Configuration conf=new Configuration();
+        
+        Job job = Job.getInstance();
+        job.setJarByClass(JavaApplication2.class);
+
+        job.setMapperClass(NoiseMapper.class);
+        job.setReducerClass(NoiseReducer.class);
+        
+        job.setNumReduceTasks(1);
+        
+        FileInputFormat.addInputPath(job, new Path("input"));
+        FileOutputFormat.setOutputPath(job, new Path("output"));
+
+        job.waitForCompletion(true);
+    }
+
+}
