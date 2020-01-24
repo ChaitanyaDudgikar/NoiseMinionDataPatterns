@@ -343,6 +343,7 @@ public class DBUpdate
 
                 
             }
+            System.out.println("Executing batch");
             stm2.executeBatch();
             fr.close();
         } catch (IOException e)

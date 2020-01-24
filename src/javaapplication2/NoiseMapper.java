@@ -29,8 +29,8 @@ public class NoiseMapper extends Mapper<Object, Text, Text, Text>
 
         double longitude = Double.parseDouble(tokens[3]);
         double latitude = Double.parseDouble(tokens[4]);
-        double qlong = (int) (longitude * 100) / 100.0;
-        double qlat = (int) (latitude * 100) / 100.0;
+        double qlong = (int) (longitude * 1000) / 1000.0;
+        double qlat = (int) (latitude * 1000) / 1000.0;
         String noiselevel = tokens[5];
 
         long time = Long.parseLong(tokens[2]);
