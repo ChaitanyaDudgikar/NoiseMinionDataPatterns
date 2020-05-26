@@ -41,13 +41,14 @@ public class DBUpdate
     {
         File file = new File("D:\\hadoop-3.2.1\\bin\\output\\part-r-00000"); //creates a new file instance  
         // Connection con = DriverManager.getConnection("jdbc:mysql://13.58.40.245:3306/noise", "noiseuser", "D)r27P(n31A+v31C-a15H&a31");
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://13.58.40.245:3306/noise", "noiseuser", "D)r27P(n31A+v31C-a15H&a31");
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://18.216.171.43:3306/noise", "noiseuser", "D)r27P(n31A+v31C-a15H&a31");
                 PreparedStatement stm = con.prepareStatement("insert into noisebydate values(0,?,?,?,?,?) on duplicate key update noiselevel=?");
                 PreparedStatement stm2 = con.prepareStatement("insert into noisepattern values(0,?,?,?,?,?,?,?) on duplicate key update noiselevel=?");
                 FileReader fr = new FileReader(file); //reads the file  
                 BufferedReader br = new BufferedReader(fr); //creates a buffering character input stream  
                 )
         {
+            con.setAutoCommit(false);
             StringBuffer sb = new StringBuffer();    //constructs a string buffer with no characters  
             String line;
 
@@ -69,7 +70,7 @@ public class DBUpdate
                 String[] s = str1.split("_", 7);
                 if (s[0].equals("DATE"))
                 {
-                    
+
                     int date = Integer.parseInt(s[1]);
                     int month = Integer.parseInt(s[2]);
                     int year = Integer.parseInt(s[3]);
@@ -78,7 +79,6 @@ public class DBUpdate
                     double latitude = Double.parseDouble(s[6]);
                     double noiselevel = Double.parseDouble(str2);
 
-                   
                     c.set(Calendar.YEAR, year);
                     c.set(Calendar.MONTH, month);
                     c.set(Calendar.DAY_OF_MONTH, date);
@@ -102,16 +102,14 @@ public class DBUpdate
 
                     stm.executeUpdate();
 
-                    
                 }
                 if (s[0].equals("PATTERN-01"))
                 {
-                   
 
                     double longitude = Double.parseDouble(s[1]);
                     double latitude = Double.parseDouble(s[2]);
                     double noiselevel = Double.parseDouble(str2);
-                    
+
                     stm2.setString(1, "-");
                     stm2.setString(2, "-");
                     stm2.setString(3, "-");
@@ -125,8 +123,8 @@ public class DBUpdate
 
                 if (s[0].equals("PATTERN-02"))
                 {
-                    
-                    String t=s[1];
+
+                    String t = s[1];
                     double longitude = Double.parseDouble(s[2]);
                     double latitude = Double.parseDouble(s[3]);
                     double noiselevel = Double.parseDouble(str2);
@@ -134,18 +132,18 @@ public class DBUpdate
                     stm2.setString(1, "-");
                     stm2.setString(2, "-");
                     stm2.setString(3, "-");
-                    stm2.setString(4,t);
+                    stm2.setString(4, t);
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                
+
                 if (s[0].equals("PATTERN-03"))
                 {
-                    
-                    String date=s[1];
+
+                    String date = s[1];
                     double longitude = Double.parseDouble(s[2]);
                     double latitude = Double.parseDouble(s[3]);
                     double noiselevel = Double.parseDouble(str2);
@@ -153,18 +151,18 @@ public class DBUpdate
                     stm2.setString(1, date);
                     stm2.setString(2, "-");
                     stm2.setString(3, "-");
-                    stm2.setString(4,"-");
+                    stm2.setString(4, "-");
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                
+
                 if (s[0].equals("PATTERN-04"))
                 {
-                    
-                    String dow=s[1];
+
+                    String dow = s[1];
                     double longitude = Double.parseDouble(s[2]);
                     double latitude = Double.parseDouble(s[3]);
                     double noiselevel = Double.parseDouble(str2);
@@ -172,19 +170,19 @@ public class DBUpdate
                     stm2.setString(1, "-");
                     stm2.setString(2, "-");
                     stm2.setString(3, dow);
-                    stm2.setString(4,"-");
+                    stm2.setString(4, "-");
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                
+
                 if (s[0].equals("PATTERN-05"))
                 {
-                    
-                    String date=s[1];
-                    String t=s[2];
+
+                    String date = s[1];
+                    String t = s[2];
                     double longitude = Double.parseDouble(s[3]);
                     double latitude = Double.parseDouble(s[4]);
                     double noiselevel = Double.parseDouble(str2);
@@ -192,19 +190,19 @@ public class DBUpdate
                     stm2.setString(1, date);
                     stm2.setString(2, "-");
                     stm2.setString(3, "-");
-                    stm2.setString(4,t);
+                    stm2.setString(4, t);
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                
-                 if (s[0].equals("PATTERN-06"))
+
+                if (s[0].equals("PATTERN-06"))
                 {
-                    
-                    String dow=s[1];
-                    String t=s[2];
+
+                    String dow = s[1];
+                    String t = s[2];
                     double longitude = Double.parseDouble(s[3]);
                     double latitude = Double.parseDouble(s[4]);
                     double noiselevel = Double.parseDouble(str2);
@@ -212,18 +210,18 @@ public class DBUpdate
                     stm2.setString(1, "-");
                     stm2.setString(2, "-");
                     stm2.setString(3, dow);
-                    stm2.setString(4,t);
+                    stm2.setString(4, t);
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                 
-                 if (s[0].equals("PATTERN-07"))
+
+                if (s[0].equals("PATTERN-07"))
                 {
-                    
-                    String month=s[1];
+
+                    String month = s[1];
                     double longitude = Double.parseDouble(s[2]);
                     double latitude = Double.parseDouble(s[3]);
                     double noiselevel = Double.parseDouble(str2);
@@ -238,12 +236,12 @@ public class DBUpdate
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                 
-                  if (s[0].equals("PATTERN-08"))
+
+                if (s[0].equals("PATTERN-08"))
                 {
-                    
-                    String month=s[1];
-                    String t=s[2];
+
+                    String month = s[1];
+                    String t = s[2];
                     double longitude = Double.parseDouble(s[3]);
                     double latitude = Double.parseDouble(s[4]);
                     double noiselevel = Double.parseDouble(str2);
@@ -251,7 +249,7 @@ public class DBUpdate
                     stm2.setString(1, "-");
                     stm2.setString(2, month);
                     stm2.setString(3, "-");
-                    stm2.setString(4,t);
+                    stm2.setString(4, t);
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
@@ -259,11 +257,11 @@ public class DBUpdate
                     stm2.addBatch();
                 }
 
-                   if (s[0].equals("PATTERN-09"))
+                if (s[0].equals("PATTERN-09"))
                 {
-                    
-                    String month=s[1];
-                    String date=s[2];
+
+                    String month = s[1];
+                    String date = s[2];
                     double longitude = Double.parseDouble(s[3]);
                     double latitude = Double.parseDouble(s[4]);
                     double noiselevel = Double.parseDouble(str2);
@@ -271,19 +269,19 @@ public class DBUpdate
                     stm2.setString(1, date);
                     stm2.setString(2, month);
                     stm2.setString(3, "-");
-                    stm2.setString(4,"-");
+                    stm2.setString(4, "-");
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                   
-                    if (s[0].equals("PATTERN-10"))
+
+                if (s[0].equals("PATTERN-10"))
                 {
-                    
-                    String month=s[1];
-                    String dow=s[2];
+
+                    String month = s[1];
+                    String dow = s[2];
                     double longitude = Double.parseDouble(s[3]);
                     double latitude = Double.parseDouble(s[4]);
                     double noiselevel = Double.parseDouble(str2);
@@ -291,7 +289,7 @@ public class DBUpdate
                     stm2.setString(1, "-");
                     stm2.setString(2, month);
                     stm2.setString(3, dow);
-                    stm2.setString(4,"-");
+                    stm2.setString(4, "-");
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
@@ -299,12 +297,12 @@ public class DBUpdate
                     stm2.addBatch();
                 }
 
-                     if (s[0].equals("PATTERN-11"))
+                if (s[0].equals("PATTERN-11"))
                 {
-                    
-                    String month=s[1];
-                    String date=s[2];
-                    String t=s[3];
+
+                    String month = s[1];
+                    String date = s[2];
+                    String t = s[3];
                     double longitude = Double.parseDouble(s[4]);
                     double latitude = Double.parseDouble(s[5]);
                     double noiselevel = Double.parseDouble(str2);
@@ -312,20 +310,20 @@ public class DBUpdate
                     stm2.setString(1, date);
                     stm2.setString(2, month);
                     stm2.setString(3, "-");
-                    stm2.setString(4,t);
+                    stm2.setString(4, t);
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-                     
-                   if (s[0].equals("PATTERN-12"))
+
+                if (s[0].equals("PATTERN-12"))
                 {
-                    
-                    String month=s[1];
-                    String dow=s[2];
-                    String t=s[3];
+
+                    String month = s[1];
+                    String dow = s[2];
+                    String t = s[3];
                     double longitude = Double.parseDouble(s[4]);
                     double latitude = Double.parseDouble(s[5]);
                     double noiselevel = Double.parseDouble(str2);
@@ -333,22 +331,22 @@ public class DBUpdate
                     stm2.setString(1, "-");
                     stm2.setString(2, month);
                     stm2.setString(3, dow);
-                    stm2.setString(4,t);
+                    stm2.setString(4, t);
                     stm2.setDouble(5, longitude);
                     stm2.setDouble(6, latitude);
                     stm2.setDouble(7, noiselevel);
                     stm2.setDouble(8, noiselevel);
                     stm2.addBatch();
                 }
-
-                
             }
             System.out.println("Executing batch");
-            stm2.executeBatch();
+            stm2.executeBatch();            
+            con.commit();
             fr.close();
         } catch (IOException e)
         {
             e.printStackTrace();
+
         }
     }
 }

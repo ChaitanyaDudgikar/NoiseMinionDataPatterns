@@ -11,7 +11,7 @@ class InputDataGenerator
     {
         //Database Connection
         Class.forName("com.mysql.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://13.58.40.245:3306/noise", "noiseuser", "D)r27P(n31A+v31C-a15H&a31");
+        Connection con = DriverManager.getConnection("jdbc:mysql://18.216.171.43:3306/noise", "noiseuser", "D)r27P(n31A+v31C-a15H&a31");
         PreparedStatement stm = con.prepareStatement("Select * from samples");
         ResultSet rs = stm.executeQuery();
 

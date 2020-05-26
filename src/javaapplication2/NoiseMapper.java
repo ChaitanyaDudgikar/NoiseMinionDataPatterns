@@ -37,8 +37,8 @@ public class NoiseMapper extends Mapper<Object, Text, Text, Text>
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(time);
 
-        c.add(Calendar.HOUR_OF_DAY, 5);
-        c.add(Calendar.MINUTE, 30);
+//        c.add(Calendar.HOUR_OF_DAY, 5);
+//        c.add(Calendar.MINUTE, 30);
 
         int day = c.get(Calendar.DAY_OF_MONTH);
         int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -53,7 +53,6 @@ public class NoiseMapper extends Mapper<Object, Text, Text, Text>
         outputKey.set("DATE_" + date + "_" + month + "_" + year + "_" + hour + "_" + qlong + "_" + qlat);
         outputValue.set(longitude + "," + latitude + "," + noiselevel);
         context.write(outputKey, outputValue);
-
         
         outputKey.set("PATTERN-01_"  + qlong + "_" + qlat);
         outputValue.set(longitude + "," + latitude + "," + noiselevel);
